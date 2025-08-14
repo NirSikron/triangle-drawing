@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+  <head>
+    <meta charset="UTF-8" />
+    <title>משולש עם זוויות וקשתות</title>
+  </head>
+  <body style="text-align: center; background: #f8f8f8">
+    <h2>משולש עם זוויות וקשתות</h2>
+
+    <canvas
+      id="canvas"
+      width="800"
+      height="800"
+      style="background: #eee; display: block; margin: auto"
+    ></canvas>
+
+    <script>
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+
+      const A = {x: 300, y: 200};
+      const B = {x: 500, y: 220};
+      const C = {x: 400, y: 500};
+
+      function drawTriangle() {
+        ctx.beginPath();
+        ctx.moveTo(A.x, A.y);
+        ctx.lineTo(B.x, B.y);
+        ctx.lineTo(C.x, C.y);
+        ctx.closePath();
+        ctx.fillStyle = 'grey';
+        ctx.fill();
+        ctx.strokeStyle = 'blue';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      function angle(a, b, c) {
+        const ab = {x: b.x - a.x, y: b.y - a.y};
+        const cb = {x: b.x - c.x, y: b.y - c.y};
+        const dot = ab.x * cb.x + ab.y * cb.y;
+        const abLen = Math.hypot(ab.x, ab.y);
+        const cbLen = Math.hypot(cb.x, cb.y);
+        return Math.acos(dot / (abLen * cbLen));
+      }
+
+      function drawArc(vertex, p1, p2, radius) {
+        let a1 = Math.atan2(p1.y - vertex.y, p1.x - vertex.x);
+        let a2 = Math.atan2(p2.y - vertex.y, p2.x - vertex.x);
+
+        if (a2 < a1) {
+          const temp = a1;
+          a1 = a2;
+          a2 = temp;
+        }
+        if (a2 - a1 > Math.PI) {
+          const temp = a1;
+          a1 = a2;
+          a2 = temp + 2 * Math.PI;
+        }
+
+        ctx.beginPath();
+        ctx.arc(vertex.x, vertex.y, radius, a1, a2);
+        ctx.strokeStyle = 'orange';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
+      function drawAngles() {
+        const angleA = angle(B, A, C);
+        const angleB = angle(A, B, C);
+        const angleC = angle(A, C, B);
+
+        ctx.fillStyle = 'black';
+        ctx.font = '14px Arial';
+        ctx.fillText(((angleA * 180) / Math.PI).toFixed(1) + '°', A.x - 20, A.y - 10);
+        ctx.fillText(((angleB * 180) / Math.PI).toFixed(1) + '°', B.x + 10, B.y - 10);
+        ctx.fillText(((angleC * 180) / Math.PI).toFixed(1) + '°', C.x - 10, C.y + 20);
+
+        drawArc(A, B, C, 25);
+        drawArc(B, A, C, 25);
+        drawArc(C, A, B, 25);
+      }
+
+      drawTriangle();
+      drawAngles();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>קלט נקודות למשולש</title>
+    <link rel="stylesheet" href="triangle.css" />
+  </head>
+  <body>
+    <div class="page">
+      <h1>קלט נקודות למשולש</h1>
+      <p>הזן את ערכי X ו־Y עבור שלוש נקודות (A, B, C) ולחץ על "הצג משולש" כדי לראות את התוצאה.</p>
+
+      <div class="card">
+        <form id="f">
+          <fieldset>
+            <legend>נקודה A</legend>
+            <label>X: <input id="ax" type="number" step="any" required /></label>
+            <label>Y: <input id="ay" type="number" step="any" required /></label>
+          </fieldset>
+
+          <fieldset>
+            <legend>נקודה B</legend>
+            <label>X: <input id="bx" type="number" step="any" required /></label>
+            <label>Y: <input id="by" type="number" step="any" required /></label>
+          </fieldset>
+
+          <fieldset>
+            <legend>נקודה C</legend>
+            <label>X: <input id="cx" type="number" step="any" required /></label>
+            <label>Y: <input id="cy" type="number" step="any" required /></label>
+          </fieldset>
+
+          <button type="submit">הצג משולש</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      ax.value = 100;
+      ay.value = 120;
+      bx.value = 500;
+      by.value = 200;
+      cx.value = 300;
+      cy.value = 600;
+
+      f.onsubmit = (e) => {
+        e.preventDefault();
+        const params = new URLSearchParams({
+          ax: ax.value,
+          ay: ay.value,
+          bx: bx.value,
+          by: by.value,
+          cx: cx.value,
+          cy: cy.value,
+        });
+        location.href = 'VIEW.html?' + params.toString();
+      };
+    </script>
+  </body>
+</html>
