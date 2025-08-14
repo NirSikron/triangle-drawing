@@ -18,10 +18,11 @@
     <script>
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
-
-      const A = {x: 300, y: 200};
-      const B = {x: 500, y: 220};
-      const C = {x: 400, y: 500};
+      const params = new URLSearchParams(location.search);
+      const H = canvas.height;
+      const A = {x: +params.get('ax'), y: H - +params.get('ay')};
+      const B = {x: +params.get('bx'), y: H - +params.get('by')};
+      const C = {x: +params.get('cx'), y: H - +params.get('cy')};
 
       function drawTriangle() {
         ctx.beginPath();
